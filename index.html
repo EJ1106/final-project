@@ -31,10 +31,17 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <script>
-        var n = 20
-        for (i = 1; i <= n; i++) {
-            for (j = 1; j <= n; j++) {
-                $('#main').append("<div id='cell" + i + "_" + j + "' class='cell'>按鈕</div>");
+        var Rows = 20
+        var Cells = new Array(Rows);
+        for (i = 1; i <= Rows; i++) {
+            Cells[i - 1] = new Array(Rows); // 產生二維陣列
+            for (j = 1; j <= Rows; j++) {
+                Cells[i - 1][j - 1] = {
+                    IsOpen: false,
+                    IsMine: false,
+                    IsFlag: false
+                };
+                $('#main').append("<div id='cell" + i + "_" + j + "' class='cell'></div>");
             }
             $('#main').append("<br/>");
         }
