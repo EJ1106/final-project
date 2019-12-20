@@ -42,8 +42,6 @@
         var Rows = 20
         var Cells = new Array(Rows);
 
-        Initialize();
-
         function Initialize() {
             for (i = 1; i <= Rows; i++) {
                 Cells[i - 1] = new Array(Rows); // 產生二維陣列
@@ -71,9 +69,8 @@
         }
 
         $(() => {
-            Initialize();
             $('#start').on('click', (event) => {
-                Initialize();
+                Initialize($('#main').html(''));
             })
         });
     </script>
