@@ -30,32 +30,52 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+
+    <div class="text-center mt-4">
+        <button id="start">遊戲開始</button>
+    </div>
+
+
+
     <script>
+        var Mines = 40;
         var Rows = 20
         var Cells = new Array(Rows);
-        for (i = 1; i <= Rows; i++) {
-            Cells[i - 1] = new Array(Rows); // 產生二維陣列
-            for (j = 1; j <= Rows; j++) {
-                Cells[i - 1][j - 1] = {
-                    IsOpen: false,
-                    IsMine: false,
-                    IsFlag: false
-                };
-                $('#main').append("<div id='cell" + i + "_" + j + "' class='cell'><label></label></div>");
+
+        Initialize();
+
+        function Initialize() {
+            for (i = 1; i <= Rows; i++) {
+                Cells[i - 1] = new Array(Rows); // 產生二維陣列
+                for (j = 1; j <= Rows; j++) {
+                    Cells[i - 1][j - 1] = {
+                        IsOpen: false,
+                        IsMine: false,
+                        IsFlag: false
+                    };
+                    $('#main').append("<div id='cell" + i + "_" + j + "' class='cell'><label></label></div>");
+                }
+                $('#main').append("<br/>");
             }
-            $('#main').append("<br/>");
-        }
-        var Mines = 40;
-        for (; Mines > 0;) {
-            let x = Math.floor(Math.random() * Rows);
-            let y = Math.floor(Math.random() * Rows);
-            // 判斷是否已經有地雷了
-            if (!Cells[x][y].IsMine) {
-                Cells[x][y].IsMine = true;
-                Mines--;
-                $('#cell' + x + "_" + y).html("<i class='fas fa-bomb' style='color:#64363C'></i>")
+
+            for (; Mines > 0;) {
+                let x = Math.floor(Math.random() * Rows);
+                let y = Math.floor(Math.random() * Rows);
+                // 判斷是否已經有地雷了
+                if (!Cells[x][y].IsMine) {
+                    Cells[x][y].IsMine = true;
+                    Mines--;
+                    $('#cell' + x + "_" + y).html("<i class='fas fa-bomb' style='color:#64363C'></i>")
+                }
             }
         }
+
+        $(() => {
+            Initialize();
+            $('#start').on('click', (event) => {
+                Initialize();
+            })
+        });
     </script>
 
 </body>
