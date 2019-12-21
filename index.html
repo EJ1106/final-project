@@ -18,6 +18,15 @@
             text-align: center;
             background-color: silver;
         }
+        
+        .cellopen {
+            display: inline-table;
+            width: 30px;
+            height: 30px;
+            border: 1px solid black;
+            text-align: center;
+            background-color: white;
+        }
     </style>
 </head>
 
@@ -69,12 +78,25 @@
                     $('#cell' + x + "_" + y).html("<i class='fas fa-bomb' style='color:#64363C'></i>")
                 }
             }
+            $('.cell').on('click', (event) => {
+                var id = event.target.id;
+                var Temp = id.substr(4);
+                var Temp2 = Temp.split('_');
+                var X = Temp2[0],
+                    Y = Temp2[1];
+                if (!Cells[X][Y].IsOpen) {
+                    Cells[X][Y].IsOpen = true;
+                    $('#cell' + X + '_' + Y).removeClass('cell').addClass('cellopen');
+                }
+
+            })
         }
 
         $(() => {
             $('#start').on('click', (event) => {
                 Initialize();
             })
+
         });
     </script>
 
