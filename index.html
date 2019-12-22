@@ -87,24 +87,39 @@
                     CalculateCell(x + 1, y + 1);
                 }
             }
-            $('.cell').on('click', (event) => {
+
+            $('.cell').on('mousedown', (event) => {
                 var id = event.target.id;
                 var Temp = id.substr(4);
                 var Temp2 = Temp.split('_');
                 var X = Temp2[0],
                     Y = Temp2[1];
-                if (!Cells[x][y].IsOpen) {
-                    Cells[x][y].IsOpen = true;
-                    $('#cell' + X + '_' + Y).removeClass('cell').addClass('cellopen');
-                    if (Cells[X][Y].IsMine) {
-                        alert('遊戲結束')
-                    } else {
-                        if (Cells[X][Y].MinesNext == 0) {
-                            $('#cell' + X + '_' + Y).removeClass('cell').addClass('ecellopen');
+                if (!Cells[X][Y].IsOpen) {
+                    if (event.which == 3) {
+                        if (!Cells[X][Y].IsFlag) {
+                            Cells[X][Y].IsFlag = true;
+                            $('#cell' + X + "_" + Y).html("<i class=fas fa-flag style='color:#bbbbbb'></i>")
                         } else {
-                            $('#cell' + X + "_" + Y).html("<i class='' style='color:blue'>" + Cells[X][Y].MinesNext + "</i>")
+                            Cells[X][Y].IsFlag = false;
+                            $('#cell' + X + "_" + Y).html("<label></label>");
                         }
+
+                    } else {
+
+                        Cells[X][Y].IsOpen = true;
+                        $('#cell' + X + '_' + Y).removeClass('cell').addClass('cellopen');
+                        if (Cells[X][Y].IsMine) {
+                            alert('遊戲結束')
+                        } else {
+                            if (Cells[X][Y].MinesNext == 0) {
+                                $('#cell' + X + '_' + Y).removeClass('cell').addClass('ecellopen');
+                            } else {
+                                $('#cell' + X + "_" + Y).html("<i class='' style='color:blue'>" + Cells[X][Y].MinesNext + "</i>")
+                            }
+                        }
+
                     }
+
 
                 }
 
@@ -121,6 +136,7 @@
         }
 
         $(() => {
+            document.addEventListener('contextmenu', event => event.preventDefault());
             $('#start').on('click', (event) => {
                 Initialize();
             })
