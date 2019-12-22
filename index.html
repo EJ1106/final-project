@@ -55,13 +55,14 @@
         function Initialize() {
             $('#main').html('')
             let LeftedMines = Mines;
-            for (i = 1; i <= Rows; i++) {
-                Cells[i - 1] = new Array(Rows); // 產生二維陣列
-                for (j = 1; j <= Rows; j++) {
-                    Cells[i - 1][j - 1] = {
+            for (i = 0; i <= Rows; i++) {
+                Cells[i] = new Array(Rows); // 產生二維陣列
+                for (j = 0; j <= Rows; j++) {
+                    Cells[i][j] = {
                         IsOpen: false,
                         IsMine: false,
-                        IsFlag: false
+                        IsFlag: false,
+                        MinesNext: 0
                     };
                     $('#main').append("<div id='cell" + i + "_" + j + "' class='cell'><label></label></div>");
                 }
@@ -76,6 +77,14 @@
                     Cells[x][y].IsMine = true;
                     LeftedMines--;
                     $('#cell' + x + "_" + y).html("<i class='fas fa-bomb' style='color:#64363C'></i>")
+                    CalculateCell(x - 1, y - 1);
+                    CalculateCell(x, y - 1);
+                    CalculateCell(x + 1, y - 1);
+                    CalculateCell(x - 1, y);
+                    CalculateCell(x + 1, y);
+                    CalculateCell(x - 1, y + 1);
+                    CalculateCell(x, y + 1);
+                    CalculateCell(x + 1, y + 1);
                 }
             }
             $('.cell').on('click', (event) => {
@@ -87,9 +96,28 @@
                 if (!Cells[X][Y].IsOpen) {
                     Cells[X][Y].IsOpen = true;
                     $('#cell' + X + '_' + Y).removeClass('cell').addClass('cellopen');
+                    if (Cells[X][Y].IsMine) {
+                        alert('遊戲結束')
+                    } else {
+                        if (Cells[X][Y].MinesNext == 0) {
+                            $('#cell' + X + '_' + Y).removeClass('cell').addClass('ecellopen');
+                        } else {
+                            $('#cell' + x + "_" + y).html("<i class='' style='color:blue'>" + Cells[x][y].MinesNext + "</i>")
+                        }
+                    }
+
                 }
 
             })
+        }
+
+        function CalculateCell(x, y) {
+            if (x >= 0 && y >= 0 && x < Rows && y < Rows) {
+                if (!Cells[x][y].IsMine) {
+                    Cells[x][y].MinesNext++;
+                    //$('#cell' + x + "_" + y).html("<i class='' style='color:blue'>" + Cells[x][y].MinesNext + "</i>")
+                }
+            }
         }
 
         $(() => {
