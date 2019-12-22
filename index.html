@@ -55,9 +55,9 @@
         function Initialize() {
             $('#main').html('')
             let LeftedMines = Mines;
-            for (i = 0; i <= Rows; i++) {
+            for (i = 0; i < Rows; i++) {
                 Cells[i] = new Array(Rows); // 產生二維陣列
-                for (j = 0; j <= Rows; j++) {
+                for (j = 0; j < Rows; j++) {
                     Cells[i][j] = {
                         IsOpen: false,
                         IsMine: false,
@@ -93,8 +93,8 @@
                 var Temp2 = Temp.split('_');
                 var X = Temp2[0],
                     Y = Temp2[1];
-                if (!Cells[X][Y].IsOpen) {
-                    Cells[X][Y].IsOpen = true;
+                if (!Cells[x][y].IsOpen) {
+                    Cells[x][y].IsOpen = true;
                     $('#cell' + X + '_' + Y).removeClass('cell').addClass('cellopen');
                     if (Cells[X][Y].IsMine) {
                         alert('遊戲結束')
@@ -102,7 +102,7 @@
                         if (Cells[X][Y].MinesNext == 0) {
                             $('#cell' + X + '_' + Y).removeClass('cell').addClass('ecellopen');
                         } else {
-                            $('#cell' + x + "_" + y).html("<i class='' style='color:blue'>" + Cells[x][y].MinesNext + "</i>")
+                            $('#cell' + X + "_" + Y).html("<i class='' style='color:blue'>" + Cells[X][Y].MinesNext + "</i>")
                         }
                     }
 
@@ -115,7 +115,7 @@
             if (x >= 0 && y >= 0 && x < Rows && y < Rows) {
                 if (!Cells[x][y].IsMine) {
                     Cells[x][y].MinesNext++;
-                    //$('#cell' + x + "_" + y).html("<i class='' style='color:blue'>" + Cells[x][y].MinesNext + "</i>")
+                    //$('#cell' + x + "_" + y).html("<i class='' style='color:blue'>" + Cells[X][Y].MinesNext + "</i>")
                 }
             }
         }
